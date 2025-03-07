@@ -42,7 +42,7 @@ jobs:
         run: |
           REPO_URI=$(aws ecr describe-repositories --repository-names spectaclesxr --query 'repositories[0].repositoryUri' --output text)
           SHA=$(git rev-parse --short HEAD)
-          docker buildx build --platform linux/amd64,linux/arm64 -t $REPO_URI:latest -t $REPO_URI:$SHA --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -t $REPO_URI:latest -t $REPO_URI:$SHA --push ./server
       - name: Update ECS Service
         run: |
           aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --force-new-deployment
