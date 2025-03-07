@@ -18,7 +18,7 @@ resource "aws_subnet" "public" {
   count             = 2
   vpc_id            = aws_vpc.spectaclesxr.id
   cidr_block        = cidrsubnet(aws_vpc.spectaclesxr.cidr_block, 8, count.index)
-  availability_zone = element(["us-west-1a", "us-west-1b"], count.index)
+  availability_zone = element(["${var.region}a", "${var.region}b"], count.index)
 
   tags = {
     Name = "spectaclesxr-public-${count.index}"

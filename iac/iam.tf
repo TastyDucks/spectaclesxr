@@ -77,8 +77,9 @@ resource "aws_iam_policy" "ecr_and_ecs_deploy" {
           "ecs:ListServices",
           "ecs:ListTasks",
           "ecs:WaitForServicesStable",
+          "ecs:UpdateService"
         ]
-        Resource = aws_ecs_service.spectaclesxr_service.id
+        Resource = "arn:aws:ecs:${var.region}:${var.account_id}:service/${aws_ecs_cluster.spectaclesxr.name}/${aws_ecs_service.spectaclesxr_service.name}"
       },
       # Permissions to assume identity via OIDC.
       {
