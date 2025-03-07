@@ -22,11 +22,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
       - name: Debug Info
         run: |
           echo "AWS_REGION: $AWS_REGION"
@@ -35,7 +30,12 @@ jobs:
           echo "ECR_REPOSITORY: $ECR_REPOSITORY"
           echo "ECS_CLUSTER: $ECS_CLUSTER"
           echo "ECS_SERVICE: $ECS_SERVICE"
-          echo "ACTIONS_ID_TOKEN $ACTIONS_ID_TOKEN"
+          echo "ACTIONS_ID_TOKEN: $ACTIONS_ID_TOKEN"
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
       - name: Buildx
