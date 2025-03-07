@@ -36,6 +36,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           version: latest
+          driver: docker-container
           driver-opts: image=moby/buildkit:latest
       - name: Build, tag, and push image to Amazon ECR
         run: |
