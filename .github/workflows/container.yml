@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: us-west-1
-  AWS_ROLE_ARN: arn:aws:iam::463470957391:role/github-actions
+  AWS_ROLE_ARN: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions
   ECR_REPOSITORY: spectaclesxr
   ECS_CLUSTER: spectaclesxr
   ECS_SERVICE: spectaclesxr

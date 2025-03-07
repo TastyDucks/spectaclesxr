@@ -10,11 +10,12 @@
 terraform.tfstate
 terraform.tfstate.backup
 *.tfvars
+*.tfvars.json
 .env
 *.pem
 
 # Just in case...
-.aws/credentials
+.aws/**
 
 # Snapchat Lens Studio
 spectacles-lens/Cache

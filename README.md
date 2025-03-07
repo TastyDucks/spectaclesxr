@@ -2,12 +2,15 @@
 
 Snapchat Spectacles lens for teleop of Unitree humanoid robot.
 
-- Server: Python (mocked connection)
-- Client: Snapchat Spectacles lens
+- [server](server): Coordinates communication between the robot and the spectacles
+- [spectacles-lens](spectacles-lens): Snapchat Spectacles lens client
+- [unitree](unitree): Unitree robot client
 
 ## Deployment
 
 This devcontainer has Terraform and the AWS CLI installed.
+
+To deploy the server:
 
 1. Configure AWS CLI, and log in using a profile called `tf`.
    ```
@@ -45,4 +48,3 @@ This devcontainer has Terraform and the AWS CLI installed.
    terraform init && \
    terraform apply
    ```
-5. Copy outputs for 

@@ -24,7 +24,7 @@ resource "aws_iam_role" "github_actions" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:tastyducks/spectaclesxr:*"
+            "token.actions.githubusercontent.com:sub" = "repo:tastyducks/spectaclesxr:ref:refs/heads/master"
           }
         }
       }
@@ -32,34 +32,57 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-resource "aws_iam_policy" "ecr_push" {
-  name        = "ecr-push-policy"
-  description = "Policy to allow pushing to ECR"
+resource "aws_iam_policy" "ecr_and_ecs_deploy" {
+  depends_on  = [aws_ecs_service.spectaclesxr_service]
+  name        = "ecr-and-ecs-deploy-policy"
+  description = "Policy to allow pushing to ECR and update ECS tasks"
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # Permissions to push to ECR.
       {
         Effect = "Allow"
         Action = [
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:PutImage",
-          "ecr:InitiateLayerUpload",
-          "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload",
-          "ecr:GetAuthorizationToken"
+          "ecr:GetAuthorizationToken",
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:CompleteLayerUpload",
+          "ecr:InitiateLayerUpload",
+          "ecr:PutImage",
+          "ecr:UploadLayerPart"
+        ],
+        Resource = aws_ecr_repository.spectaclesxr.arn
+      },
+      # Permissions to force a new deployment.
+      {
+        Effect = "Allow"
+        Action = [
+          "ecs:DescribeClusters",
+          "ecs:DescribeContainerInstances",
+          "ecs:DescribeServices",
+          "ecs:DescribeTaskDefinition",
+          "ecs:DescribeTasks",
+          "ecs:ListClusters",
+          "ecs:ListContainerInstances",
+          "ecs:ListServices",
+          "ecs:ListTasks",
+          "ecs:WaitForServicesStable",
+        ]
+        Resource = aws_ecs_service.spectaclesxr_service.id
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "github_actions_ecr" {
+resource "aws_iam_role_policy_attachment" "github_actions" {
   role       = aws_iam_role.github_actions.name
-  policy_arn = aws_iam_policy.ecr_push.arn
+  policy_arn = aws_iam_policy.ecr_and_ecs_deploy.arn
 }
 
 resource "aws_iam_role" "ecs_run" {
