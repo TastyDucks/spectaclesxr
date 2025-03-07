@@ -56,6 +56,7 @@ resource "aws_iam_policy" "ecr_and_ecs_deploy" {
         Action = [
           "ecr:BatchCheckLayerAvailability",
           "ecr:CompleteLayerUpload",
+          "ecr:DescribeRepositories",
           "ecr:InitiateLayerUpload",
           "ecr:PutImage",
           "ecr:UploadLayerPart"
