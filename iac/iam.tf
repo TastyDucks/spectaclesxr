@@ -23,7 +23,8 @@ resource "aws_iam_role" "github_actions" {
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
-          StringLike = {
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
             "token.actions.githubusercontent.com:sub" = "repo:tastyducks/spectaclesxr:ref:refs/heads/master"
           }
         }
@@ -75,6 +76,12 @@ resource "aws_iam_policy" "ecr_and_ecs_deploy" {
           "ecs:WaitForServicesStable",
         ]
         Resource = aws_ecs_service.spectaclesxr_service.id
+      },
+      # Permissions to assume identity via OIDC.
+      {
+        Effect   = "Allow"
+        Action   = "sts:AssumeRoleWithWebIdentity"
+        Resource = aws_iam_role.github_actions.arn
       }
     ]
   })
