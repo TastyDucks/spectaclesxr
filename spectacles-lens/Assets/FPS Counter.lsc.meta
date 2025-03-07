@@ -1,0 +1,16 @@
+- !<AssetImportMetadata/cf2ccb30-c5b9-4eb9-9322-b08276fe1cae>
+  ImportedAssetIds:
+    FPS Counter/Script: !<reference> 39fe6324-1cb9-46ff-b3c4-9efbf0041929
+  ImporterName: LensCoreImporter
+  PrimaryAsset: !<reference> 39fe6324-1cb9-46ff-b3c4-9efbf0041929
+  PackageType: LegacyPackage
+  PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<LensCoreImporterSettings>
+    PersistentIdGenerationAlgorithm: DescriptorBased
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

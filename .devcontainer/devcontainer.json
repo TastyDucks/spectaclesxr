@@ -1,0 +1,9 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "name": "SpectaclesXR Teleop Server",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "forwardPorts": [8080]
+}

@@ -1,0 +1,22 @@
+# MacOS
+.DS_Store
+
+# Python
+.venv
+
+# Terraform
+
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+.env
+*.pem
+
+# Just in case...
+.aws/credentials
+
+# Snapchat Lens Studio
+spectacles-lens/Cache
+spectacles-lens/Support
+spectacles-lens/**/Examples

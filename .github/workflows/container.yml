@@ -1,0 +1,46 @@
+name: Build and Push Image
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-west-1
+  AWS_ROLE_ARN: arn:aws:iam::463470957391:role/github-actions
+  ECR_REPOSITORY: spectaclesxr
+  ECS_CLUSTER: spectaclesxr
+  ECS_SERVICE: spectaclesxr
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+      - name: Build, tag, and push image to Amazon ECR
+        run: |
+          REPO_URI=$(aws ecr describe-repositories --repository-names spectaclesxr --query 'repositories[0].repositoryUri' --output text)
+          SHA=$(git rev-parse --short HEAD)
+          docker build --platform linux/amd64,linux/arm64 -t $REPO_URI:latest -t $REPO_URI:$SHA --push .
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --force-new-deployment
+      - name: Verify Deployment
+        run: |
+          aws ecs wait services-stable --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }}

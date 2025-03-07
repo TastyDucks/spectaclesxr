@@ -1,0 +1,31 @@
+CollapsedEntities:
+  type: stringset
+  value:
+    size: 20
+    values:
+      - 02785690-afca-4cff-ac37-d127d7fa44e2
+      - 04fcd5b7-ad9a-48ee-a5c2-bf467d180ed2
+      - 0a850d4e-4097-4d2e-a05f-93e960e23112
+      - 0aeba225-fe3d-4326-9663-b95564516411
+      - 0bf8cbee-7ead-41ef-97e7-819d08e31a67
+      - 2dc198cb-3cee-4c59-a85b-7caf37a7c332
+      - 30446273-d721-4c15-b457-eafea5fb04f2
+      - 50cee025-2d07-4617-bb6a-be5af4f21941
+      - 58d893bb-fb43-4e17-8625-7995e29af848
+      - 6b1e64bd-3771-4e1f-b121-afce1f90b7d5
+      - 753b23e1-de78-4b4a-957e-c8095351d31d
+      - 7bbadb1d-1a1a-42d7-b51e-1bb545518944
+      - 8baf10e5-0fc7-45c8-89bb-f06914287494
+      - 9226df9d-87c6-4da9-89b2-bcf3612f80f1
+      - 9b528d15-4df6-4ad1-baf1-ba8252e79d87
+      - a2960ac4-c7d0-4a74-8daa-6f3868db3a80
+      - ab60d09a-fc3c-4dc2-98f5-70d1b3e8f0d6
+      - bca58cd2-d6eb-4050-add5-0ec24908bc05
+      - d65bcecd-db96-4fa6-a09f-0cbbc5f4714e
+      - dce7351d-e04e-4fa7-a130-eaddb20888f2
+  options: 4
+PinnedEntities:
+  type: uuids
+  value:
+    size: 0
+  options: 4
