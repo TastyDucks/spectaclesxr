@@ -22,15 +22,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Debug Info
-        run: |
-          echo "AWS_REGION: $AWS_REGION"
-          echo "AWS_ROLE_ARN: $AWS_ROLE_ARN"
-          echo "AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID"
-          echo "ECR_REPOSITORY: $ECR_REPOSITORY"
-          echo "ECS_CLUSTER: $ECS_CLUSTER"
-          echo "ECS_SERVICE: $ECS_SERVICE"
-          echo "ACTIONS_ID_TOKEN: $ACTIONS_ID_TOKEN"
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
